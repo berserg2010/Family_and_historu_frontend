@@ -50,5 +50,17 @@
   ],
   "devDependencies": {
     "webpack-cli": "^3.3.1"
-  }
+  },
+  "description": "### FRONTEND",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/berserg2010/family_and_history_frontend.git"
+  },
+  "author": "Sergei Zakamskov",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/berserg2010/family_and_history_frontend/issues"
+  },
+  "homepage": "https://github.com/berserg2010/family_and_history_frontend#readme"
 }

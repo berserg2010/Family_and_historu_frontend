@@ -2,9 +2,26 @@
 
 ### FRONTEND
 
-***
-
 #### INSTALL
+
+##### DEBIAN
+
+>###### FOLDER STRUCTURE
+>
+>
+>```
+>    work/
+>        family_and_history/
+>            frontend/
+>```
+
+In `family_and_history/frontend/`:
+
+\$ `git clone https://github.com/berserg2010/family_and_history_frontend`
+
+\$ `npm init --yes`
+
+\$ `npm install`
 
 
 ## Available Scripts
