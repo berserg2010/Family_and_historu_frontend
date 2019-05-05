@@ -74,7 +74,7 @@ class Header extends Component {
 		const {
 			classes,
 			open,
-			session: { currentUser: { firstName, lastName }},
+			// session: { currentUser: { firstName, lastName }},
 			handleDrawerOpen
 		} = this.props;
 
@@ -114,7 +114,9 @@ class Header extends Component {
 							onClick={this.handleClick}
 							color="inherit"
 						>
-							<Avatar className={classes.orangeAvatar}>{ firstName[0] }{ lastName[0] }</Avatar>
+							<Avatar className={classes.orangeAvatar}>
+								{/*{ firstName[0] }{ lastName[0] }*/}
+							</Avatar>
 						</IconButton>
 
 						<Popover
