@@ -27,7 +27,7 @@ class Dashboard extends Component{
 		const { open } = this.state;
 
 		return (
-			<Fragment >
+			<Fragment>
 				<Header position="absolute"
 								open={open}
 								handleDrawerOpen={this.handleDrawerOpen} />

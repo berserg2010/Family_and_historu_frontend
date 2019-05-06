@@ -10,7 +10,7 @@ import Family from '../../family-app'
 import { Search } from "../../../CoreApp";
 
 
-const styles = theme => ({
+const styles = (theme) => ({
 	appBarSpacer: theme.mixins.toolbar,
 
 	content: {

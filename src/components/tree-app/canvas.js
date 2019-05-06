@@ -1,9 +1,10 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useCallback, useState, useEffect } from 'react'
 import { withRouter } from 'react-router-dom'
 
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
+import Paper from '@material-ui/core/Paper';
 
 import RenderPerson from './render-person';
 import RenderFamily from './render-family';
@@ -11,6 +12,7 @@ import RenderFamily from './render-family';
 
 const mockTree = {
   person: {
+    __typename: 'PersonType',
     id: 1,
     birthSet: [
       {
@@ -20,6 +22,7 @@ const mockTree = {
         childBirthSet: [
           {
             family: {
+              __typename: 'FamilyType',
               id: 1
             }
           }
@@ -29,12 +32,37 @@ const mockTree = {
     marriageHusbandSet: [
       {
         family: {
+          __typename: 'FamilyType',
           id: 2
         }
       }
     ],
     marriageWifeSet: []
   }
+};
+
+const stepDown = (item) => {
+  if (item.__typename === 'PersonType') {
+    const { birthSet } = item;
+    const { gender } = birthSet[0];
+
+    if (gender === 'F'){
+      const { marriageWifeSet } = item;
+      const { family: { id } } = marriageWifeSet[0];
+
+    } else {
+      const { marriageHusbandSet } = item;
+      const { family: { id } } = marriageHusbandSet[0];
+    }
+
+  // get query family
+  }
+
+  if (item.__typename === 'FamilyType'){
+
+  }
+
+  // get query person
 };
 
 const styles = (theme) => ({
@@ -51,41 +79,66 @@ const styles = (theme) => ({
 
 const Canvas = () => {
 
-  // const gameHeight = 1200;
-  // const viewBox = [window.innerWidth / -2, 100 - window.innerHeight, window.innerWidth, window.innerHeight];
-  const viewBox = [0, 0, 400, 400];
+  const [width, setWidth] = useState(0);
+  const [height, setHeight] = useState(0);
+
+  useEffect(() => {
+    const element = document.getElementById('tree-element');
+
+    const handleResize = () => {
+      setWidth(element.getBoundingClientRect().width);
+      setHeight(width * 0.75)
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    }
+  }, [width]);
+
+  const getRef = useCallback(node => {
+    if (node !== null) {
+      setWidth(node.getBoundingClientRect().width);
+      setHeight(width * 0.75)
+    }
+  }, [width]);
+
 
   const svgStyle = {
     border: '1px solid crimson',
   };
 
+  const viewBox = [0, 0, width, height];
+
   return (
     <Fragment>
       <Typography component="h1" variant="h5">
-        Tree
+        Tree {width}
       </Typography>
 
-      <svg
-        id="tree-family"
-        width={400} height={400}
-        viewBox={viewBox}
-        baseProfile="full"
-        style={svgStyle}
-      >
-        <title>Tree family</title>
+      <div ref={(node) => getRef(node)}>
+        <Paper id="tree-element">
+          <svg
+            id="tree-family"
+            width={width} height={height}
+            viewBox={viewBox}
+            baseProfile="full"
+            style={svgStyle}
+          >
+            <title>Tree family</title>
 
-        <desc>
-          Tree family
-        </desc>
+            <desc>Tree family</desc>
 
-        <defs></defs>
+            <defs></defs>
 
-        <RenderPerson data={mockTree}/>
+            <RenderPerson data={mockTree} width={width} height={height}/>
 
-        <RenderFamily/>
+            {/*<RenderFamily/>*/}
 
-      </svg>
-
+          </svg>
+        </Paper>
+      </div>
     </Fragment>
   )
 };

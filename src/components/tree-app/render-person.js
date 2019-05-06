@@ -1,21 +1,23 @@
 import React, { useState } from 'react';
 
 
-const RenderPerson = ({ data }) => {
+const RenderPerson = ({ data, width, height }) => {
 
   const [ idBirth, setIdBirth ] = useState(0);
 
   const { person: { birthSet } } = data;
   const { gender, surname, givname } = birthSet[idBirth];
 
-  const width = 200,
-        heigth = 100;
+  const widthRect = 200,
+        heightRect = 100;
 
-  const relativePosX = (400 - 200) / 2;
-  const relativePosY = (400 - 100) / 2;
+  const relativePosX = (width - widthRect) / 2;
+  const relativePosY = (height - heightRect) / 2;
 
-  const relativePosTextX = relativePosX + width/2;
-  const relativePosTextY = relativePosY + heigth/2;
+  const relativePosTextX = relativePosX + widthRect/2;
+  const relativePosTextY = relativePosY + heightRect/2;
+
+  // console.log(`viewBox: ${width} ${height}`);
 
   const rectStyle = {
     fill: gender === 'F' ? '#ffa6be' : '#a1bfff',
@@ -25,26 +27,26 @@ const RenderPerson = ({ data }) => {
 
   return (
     <g>
-    <rect
-      id={1}
-      style={rectStyle}
-      width={width} height={heigth}
-      rx={5} ry={5}
-      x={relativePosX} y={relativePosY}
-    />
+      <rect
+        id={1}
+        style={rectStyle}
+        width={widthRect} height={heightRect}
+        rx={5} ry={5}
+        x={relativePosX} y={relativePosY}
+      />
 
-    <text
-      x={relativePosTextX} y={relativePosTextY}
-      // fill="red"
-      textAnchor="middle"
-    >
-      <tspan x={relativePosTextX} y={relativePosTextY - 10}>
-        {surname}
-      </tspan>
-      <tspan x={relativePosTextX} y={relativePosTextY + 10}>
-        {givname}
-      </tspan>
-    </text>
+      <text
+        x={relativePosTextX} y={relativePosTextY}
+        // fill="red"
+        textAnchor="middle"
+      >
+        <tspan x={relativePosTextX} y={relativePosTextY - 10}>
+          {surname}
+        </tspan>
+        <tspan x={relativePosTextX} y={relativePosTextY + 10}>
+          {givname}
+        </tspan>
+      </text>
     </g>
   );
 };
