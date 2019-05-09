@@ -1,6 +1,7 @@
 import { gql } from "apollo-boost";
 
-import { birthFragment } from './fragments';
+import { objectField, birthFragment } from './fragments';
+import { marriageFragment } from '../../family-app/queries/fragments'
 
 
 export const ALL_PERSON = gql`
@@ -19,14 +20,23 @@ ${birthFragment.birth}
 export const PERSON = gql`
 query Person($id: ID!){
   person(id: $id){
-    id,
-    note,
-    submitted,
-    submitter{
-      email
+    ${objectField}
+    user{
+      id,
+    },
+    birthSet{
+      ...birth
+    },
+    marriageHusbandSet{
+      ...marriage
+    },
+    marriageWifeSet{
+      ...marriage
     },
   }
 }
+${birthFragment.birth}
+${marriageFragment.marriage}
 `;
 
 export const SAVE_PERSON = gql`

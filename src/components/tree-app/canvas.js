@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useState, useEffect } from 'react'
+import React, { Fragment, createContext, useCallback, useState, useEffect } from 'react'
 import { withRouter } from 'react-router-dom'
 
 import PropTypes from 'prop-types';
@@ -6,64 +6,12 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 
-import RenderPerson from './render-person';
-import RenderFamily from './render-family';
+import PersonElement from './person-element';
+import RenderTree from './render-tree';
+// import RenderFamily from './family-element';
 
 
-const mockTree = {
-  person: {
-    __typename: 'PersonType',
-    id: 1,
-    birthSet: [
-      {
-        gender: 'M',
-        surname: "Пушкин",
-        givname: "Александр",
-        childBirthSet: [
-          {
-            family: {
-              __typename: 'FamilyType',
-              id: 1
-            }
-          }
-        ]
-      }
-    ],
-    marriageHusbandSet: [
-      {
-        family: {
-          __typename: 'FamilyType',
-          id: 2
-        }
-      }
-    ],
-    marriageWifeSet: []
-  }
-};
 
-const stepDown = (item) => {
-  if (item.__typename === 'PersonType') {
-    const { birthSet } = item;
-    const { gender } = birthSet[0];
-
-    if (gender === 'F'){
-      const { marriageWifeSet } = item;
-      const { family: { id } } = marriageWifeSet[0];
-
-    } else {
-      const { marriageHusbandSet } = item;
-      const { family: { id } } = marriageHusbandSet[0];
-    }
-
-  // get query family
-  }
-
-  if (item.__typename === 'FamilyType'){
-
-  }
-
-  // get query person
-};
 
 const styles = (theme) => ({
   root: {
@@ -79,49 +27,57 @@ const styles = (theme) => ({
 
 const Canvas = () => {
 
-  const [width, setWidth] = useState(0);
-  const [height, setHeight] = useState(0);
+  // const [width, setWidth] = useState(0);
+  // const [height, setHeight] = useState(0);
+  const [viewPort, setViewPort] = useState([0, 0, 0, 0]);
+  const [viewBox, setViewBox] = useState([0, 0, 0, 0]);
+
+  const getRef = useCallback((node) => {
+    if (node !== null) {
+      let width = node.getBoundingClientRect().width;
+      // setWidth(width);
+      // setHeight(width * 0.75);
+      setViewPort([0, 0, width, width * 0.75]);
+      setViewBox([0, 0, width, width * 0.75]);
+    }
+  }, []);
+
+  const handleResize = (element) => () => {
+    let width = element.getBoundingClientRect().width;
+    // setWidth(width);
+    // setHeight(width * 0.75);
+    setViewPort([0, 0, width, width * 0.75]);
+    setViewBox([0, 0, width, width * 0.75])
+  };
+
+  window.onload = handleResize(document.getElementById('tree-element'));
 
   useEffect(() => {
+
     const element = document.getElementById('tree-element');
-
-    const handleResize = () => {
-      setWidth(element.getBoundingClientRect().width);
-      setHeight(width * 0.75)
-    };
-
-    window.addEventListener('resize', handleResize);
+    window.addEventListener('resize', handleResize(element));
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('resize', handleResize(element));
     }
-  }, [width]);
-
-  const getRef = useCallback(node => {
-    if (node !== null) {
-      setWidth(node.getBoundingClientRect().width);
-      setHeight(width * 0.75)
-    }
-  }, [width]);
-
+  }, []);
 
   const svgStyle = {
     border: '1px solid crimson',
   };
 
-  const viewBox = [0, 0, width, height];
-
   return (
     <Fragment>
       <Typography component="h1" variant="h5">
-        Tree {width}
+        Tree {viewPort.toString()} {viewBox.toString()}
       </Typography>
 
-      <div ref={(node) => getRef(node)}>
-        <Paper id="tree-element">
+      {/*<div id="tree-element" ref={(node) => getRef(node)}>*/}
+      <div id="tree-element" ref={getRef}>
+        <Paper>
           <svg
             id="tree-family"
-            width={width} height={height}
+            width={viewPort[2]} height={viewPort[3]}
             viewBox={viewBox}
             baseProfile="full"
             style={svgStyle}
@@ -132,9 +88,7 @@ const Canvas = () => {
 
             <defs></defs>
 
-            <RenderPerson data={mockTree} width={width} height={height}/>
-
-            {/*<RenderFamily/>*/}
+            <RenderTree viewBox={viewBox}/>
 
           </svg>
         </Paper>

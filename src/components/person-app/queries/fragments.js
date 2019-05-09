@@ -1,31 +1,48 @@
 import { gql } from "apollo-boost";
 
 
+export const objectField = `
+  id,
+  note,
+  submitted,
+  submitter{
+    id,
+  },
+  changed,
+  changer{
+    id,
+  },
+`;
+
+export const eventField = `
+  ${objectField}
+  datetime,
+`;
+
 export const birthFragment = {
   birth: gql`
     fragment birth on BirthType{
-      id,
+      gender,
+      childBirthSet{
+        id,
+        reltofath,
+        reltomoth,
+        childnbrfath,
+        childnbrmoth,
+        family{
+          id,
+        },
+        birth{
+          id,
+        },
+      }
+      likes,
       person{
         id,
       },
-      gender,
       givname,
       surname,
-      likes,
-      
-      # object
-      note,
-      submitted,
-      submitter{
-        id,
-      },
-      changed,
-      changer{
-        id,
-      },
-      
-      # event
-      datetime,
+      ${eventField}
     }
   `
 };
