@@ -6,7 +6,7 @@ import { withSnackbar } from "notistack";
 
 import {
   ALL_MARRIAGE,
-} from "../../queries";
+} from "../../../../queries";
 
 import SaveMarriageItem from './save-marriage-item'
 import Loading from "../../../../CoreApp/Loading";

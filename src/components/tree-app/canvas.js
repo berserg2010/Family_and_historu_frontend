@@ -6,11 +6,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 
-import PersonElement from './person-element';
 import RenderTree from './render-tree';
-// import RenderFamily from './family-element';
-
-
 
 
 const styles = (theme) => ({

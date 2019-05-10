@@ -18,10 +18,10 @@ import {
 	ALL_PERSON,
 	PERSON,
 	SAVE_PERSON
-} from "../queries";
+} from '../../../queries';
 
 
-const styles = theme => ({
+const styles = (theme) => ({
 	root: {
 		...theme.mixins.gutters(),
 		paddingTop: theme.spacing.unit * 2,

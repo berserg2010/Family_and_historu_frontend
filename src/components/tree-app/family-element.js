@@ -1,16 +1,11 @@
 import React from 'react';
 
+import { getCenter, sizeRectFamily } from './formulas';
 
-const RenderFamily = ({ data }) => {
 
-  const width = 200,
-        heigth = 100;
+const TextFamilyElement = () => {};
 
-  const relativePosX = (400 - 200) / 2;
-  const relativePosY = (400 - 100) / 2;
-
-  const relativePosTextX = relativePosX + width/2;
-  const relativePosTextY = relativePosY + heigth/2;
+const FamilyElement = ({ viewBox }) => {
 
   const rectStyle = {
     fill: '#fac78c',
@@ -18,30 +13,19 @@ const RenderFamily = ({ data }) => {
     stroke: '#fcae53',
   };
 
+  const viewRectPosition = getCenter(viewBox, sizeRectFamily);
+
   return (
     <g>
-    <rect
-      id={1}
-      style={rectStyle}
-      width={width} height={heigth}
-      rx={5} ry={5}
-      x={relativePosX} y={relativePosY + heigth}
-    />
-
-    {/*<text*/}
-    {/*  x={relativePosTextX} y={relativePosTextY}*/}
-    {/*  // fill="red"*/}
-    {/*  textAnchor="middle"*/}
-    {/*>*/}
-    {/*  <tspan x={relativePosTextX} y={relativePosTextY - 10}>*/}
-    {/*    {data.person.birthSet[0].surname}*/}
-    {/*  </tspan>*/}
-    {/*  <tspan x={relativePosTextX} y={relativePosTextY + 10}>*/}
-    {/*    {data.person.birthSet[0].givname}*/}
-    {/*  </tspan>*/}
-    {/*</text>*/}
+      <rect
+        // id={1}
+        style={rectStyle}
+        width={sizeRectFamily[2]} height={sizeRectFamily[3]}
+        rx={5} ry={5}
+        x={viewRectPosition[0]} y={viewRectPosition[1]}
+      />
     </g>
   );
 };
 
-export default RenderFamily;
+export default FamilyElement;

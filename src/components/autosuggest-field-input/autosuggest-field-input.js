@@ -16,8 +16,8 @@ import TextFieldInput from '../text-field-input'
 
 import {
   ALL_BIRTH,
-  ALL_PERSON
-} from '../person-app/queries'
+  ALL_PERSON,
+} from '../../queries'
 
 
 const renderInputComponent = (inputProps) => {

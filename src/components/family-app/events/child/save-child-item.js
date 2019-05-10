@@ -18,7 +18,7 @@ import IntegrationAutosuggest from '../../../autosuggest-field-input';
 import {
 	SAVE_CHILD,
 	ALL_CHILD,
-} from "../../queries";
+} from "../../../../queries";
 import RadioFieldInput from "../../../radio-field-input";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Radio from "@material-ui/core/Radio";

@@ -23,11 +23,10 @@ import {
 	ALL_BIRTH,
 	SAVE_BIRTH,
 	ALL_PERSON,
-} from "../../queries";
+} from "../../../../queries";
 
 
-
-const styles = theme => ({
+const styles = (theme) => ({
 	root: {
 		...theme.mixins.gutters(),
 		paddingTop: theme.spacing.unit * 2,

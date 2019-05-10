@@ -10,14 +10,14 @@ import Typography from '@material-ui/core/Typography';
 
 import {
   ALL_FAMILY,
-} from "../queries";
+} from "../../../queries";
 
 import FamilyListItem from "./family-list-item";
 import Loading from "../../../CoreApp/Loading";
 import Error from "../../../CoreApp/Error";
 
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     // width: '100%',
     // maxWidth: 360,
@@ -30,6 +30,7 @@ const styles = theme => ({
 });
 
 const FamilyList = ({ allFamily, loading, error, classes }) => {
+
   if (loading) return <Loading />;
   if (error) return <Error error={error}/>;
 
@@ -62,9 +63,7 @@ const FamilyList = ({ allFamily, loading, error, classes }) => {
 
 const withQuery = graphql(ALL_FAMILY, {
   props: ({ data: { allFamily, loading, error }}) => ({
-    allFamily,
-    loading,
-    error,
+    allFamily, loading, error
   })
 });
 

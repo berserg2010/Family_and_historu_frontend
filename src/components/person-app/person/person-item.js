@@ -13,7 +13,7 @@ import { SaveBirth } from "../events/birth"
 import SavePerson from './save-person'
 
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     width: '100%',
   },

@@ -6,14 +6,14 @@ import { withSnackbar } from "notistack";
 
 import {
   ALL_BIRTH,
-} from "../../queries";
+} from "../../../../queries";
 import SaveBirthItem from './save-birth-item'
 import Loading from "../../../../CoreApp/Loading";
 import Error from "../../../../CoreApp/Error";
 
 
-const SaveBirth = (props) => {
-  const { allBirth={}, loading, error } = props;
+const SaveBirth = ({ allBirth={}, loading, error }) => {
+
   if (loading) return <Loading />;
   if (error) return <Error error={error}/>;
 

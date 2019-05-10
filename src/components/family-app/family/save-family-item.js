@@ -18,7 +18,7 @@ import {
 	ALL_FAMILY,
 	FAMILY,
 	SAVE_FAMILY
-} from "../queries";
+} from "../../../queries";
 
 
 const styles = (theme) => ({

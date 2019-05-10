@@ -6,11 +6,11 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from "@material-ui/core/Grid";
 
-import { CURRENT_USER } from "../../../queries";
 import {
+	CURRENT_USER,
 	ALL_PERSON,
-	DELETE_PERSON
-} from "../queries";
+	DELETE_PERSON,
+} from '../../../queries';
 
 
 const handleDelete = (mutate) => {

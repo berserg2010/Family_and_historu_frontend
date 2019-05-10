@@ -22,7 +22,9 @@ import Link from "@material-ui/core/Link";
 import { withSnackbar } from "notistack";
 
 import withSession from "../../CoreApp/withSession";
-import { TOKEN_AUTH } from "./queries";
+import {
+  TOKEN_AUTH,
+} from "../../queries";
 
 
 const styles = theme => ({

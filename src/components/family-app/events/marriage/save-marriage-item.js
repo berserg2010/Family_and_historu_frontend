@@ -21,7 +21,7 @@ import {
 	MARRIAGE,
 	SAVE_MARRIAGE,
 	ALL_FAMILY,
-} from "../../queries";
+} from "../../../../queries";
 
 
 const getName = ({ birthSet }) => {

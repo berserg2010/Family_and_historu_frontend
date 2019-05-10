@@ -1,4 +1,12 @@
 import React, { useState } from 'react';
+import { graphql } from "react-apollo";
+
+import Loading from "../../CoreApp/Loading";
+import Error from "../../CoreApp/Error";
+import { sizeRectPerson, getCenter, getWidth, getHeight } from './formulas';
+import {
+  PERSON,
+} from '../../queries'
 
 
 const TextPersonElement = ({ data, viewRect }) => {
@@ -27,46 +35,21 @@ const TextPersonElement = ({ data, viewRect }) => {
   )
 };
 
-const getWidth = (element) => {
-  return element[2] - element[0]
-};
-
-const getHeight = (element) => {
-  return element[3] - element[1]
-};
-
-const getCenter = (container, element) => {
-  const containerWidth = getWidth(container);
-  const containerHeight = getHeight(container);
-
-  const elementWidth = getWidth(element);
-  const elementHeight = getHeight(element);
-
-  return [
-    (containerWidth - elementWidth) / 2,
-    (containerHeight - elementHeight) / 2,
-    elementWidth + (containerWidth - elementWidth) / 2,
-    elementHeight + (containerHeight - elementHeight) / 2,
-  ]
-
-};
-
-const PersonElement = ({ data={}, viewBox }) => {
+const PersonElement = ({ viewBox, person, loading, error }) => {
 
   const [idBirth, setIdBirth] = useState(0);
 
-  const { person: { birthSet=[] }={} } = data;
+  if (loading) return <Loading />;
+  if (error) return <Error error={error}/>;
+
+  const { birthSet=[] } = person;
   const { gender='U' } = birthSet.length && birthSet[idBirth];
-
-  const viewRect = [0, 0, 200, 100];
-
-  const viewRectPosition = getCenter(viewBox, viewRect);
 
   const rectStyle = {
     strokeWidth: 3,
   };
 
-  if (!data.person){
+  if (!person){
 
     rectStyle.fill = '#dedede';
     rectStyle.stroke = '#bcbcbc';
@@ -78,19 +61,32 @@ const PersonElement = ({ data={}, viewBox }) => {
 
   }
 
+  const viewRectPosition = getCenter(viewBox, sizeRectPerson);
+
   return (
     <g>
       <rect
         // id={id}
         style={rectStyle}
-        width={viewRect[2]} height={viewRect[3]}
+        width={sizeRectPerson[2]} height={sizeRectPerson[3]}
         rx={5} ry={5}
         x={viewRectPosition[0]} y={viewRectPosition[1]}
       />
 
-      { data.person && <TextPersonElement data={birthSet[idBirth]} viewRect={viewRectPosition}/>}
+      { person && <TextPersonElement data={birthSet[idBirth]} viewRect={viewRectPosition}/> }
     </g>
   );
 };
 
-export default PersonElement;
+const withQuery = graphql(PERSON, {
+  props: ({ data: { person, loading, error } }) => ({
+    person, loading, error
+  }),
+  options: ({ id }) => ({
+    variables: {
+      id: id
+    }
+  })
+});
+
+export default withQuery(PersonElement);

@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 
 import {
   ALL_PERSON,
-} from "../queries";
+} from '../../../queries';
 
 import Loading from "../../../CoreApp/Loading";
 import Error from "../../../CoreApp/Error";

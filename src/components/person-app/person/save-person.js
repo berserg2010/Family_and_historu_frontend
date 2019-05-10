@@ -9,11 +9,11 @@ import Loading from "../../../CoreApp/Loading";
 import Error from "../../../CoreApp/Error";
 import {
   PERSON,
-} from "../queries";
+} from '../../../queries';
 
 
-const SavePerson = (props) => {
-  const { person={}, loading, error } = props;
+const SavePerson = ({ person={}, loading, error }) => {
+
   if (loading) return <Loading />;
   if (error) return <Error error={error}/>;
 

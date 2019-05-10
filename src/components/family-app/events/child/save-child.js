@@ -6,7 +6,7 @@ import { withSnackbar } from "notistack";
 
 import {
   ALL_CHILD,
-} from "../../queries";
+} from "../../../../queries";
 
 import SaveChildItem from './save-child-item'
 import Loading from "../../../../CoreApp/Loading";

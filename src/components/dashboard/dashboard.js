@@ -41,5 +41,4 @@ class Dashboard extends Component{
 	}
 }
 
-// export default withAuth(Dashboard); // header 77 118
-export default Dashboard;
+export default withAuth(Dashboard);

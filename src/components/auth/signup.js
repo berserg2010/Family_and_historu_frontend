@@ -22,7 +22,9 @@ import Grid from "@material-ui/core/Grid";
 import { withSnackbar } from "notistack";
 
 import withSession from "../../CoreApp/withSession";
-import { SIGNUP_USER } from "./queries";
+import {
+  SIGNUP_USER,
+} from '../../queries';
 
 
 const styles = theme => ({

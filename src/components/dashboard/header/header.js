@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 
 import PropTypes from "prop-types";
 import classNames from "classnames";
-import {AppBar, CssBaseline, IconButton, Toolbar, Typography, withStyles} from "@material-ui/core";
+import { AppBar, CssBaseline, IconButton, Toolbar, Typography, withStyles } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
 import MenuIcon from '@material-ui/icons/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -15,7 +15,7 @@ import { withSession } from "../../../CoreApp";
 
 const drawerWidth = 240;
 
-const styles = theme => ({
+const styles = (theme) => ({
 	toolbar: {
 		paddingRight: 24, // keep right padding when drawer closed
 	},
@@ -74,7 +74,7 @@ class Header extends Component {
 		const {
 			classes,
 			open,
-			// session: { currentUser: { firstName, lastName }},
+			session: { currentUser: { firstName, lastName }},
 			handleDrawerOpen
 		} = this.props;
 
@@ -105,7 +105,7 @@ class Header extends Component {
 							color="inherit"
 							noWrap
 							className={classes.title}>
-							{/*<h4>Welcome, <strong>{this.props.session.currentUser.email}</strong></h4>*/}
+							Welcome, <strong>{this.props.session.currentUser.email}</strong>
 						</Typography>
 
 						<IconButton
@@ -115,7 +115,7 @@ class Header extends Component {
 							color="inherit"
 						>
 							<Avatar className={classes.orangeAvatar}>
-								{/*{ firstName[0] }{ lastName[0] }*/}
+								{ firstName[0] }{ lastName[0] }
 							</Avatar>
 						</IconButton>
 

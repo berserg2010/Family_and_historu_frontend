@@ -9,7 +9,7 @@ import Loading from "../../../CoreApp/Loading";
 import Error from "../../../CoreApp/Error";
 import {
   FAMILY,
-} from "../queries";
+} from '../../../queries';
 
 
 const SaveFamily = ({ family={}, loading, error }) => {
