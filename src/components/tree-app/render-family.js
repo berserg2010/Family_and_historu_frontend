@@ -14,6 +14,8 @@ const RenderFamily = ({ viewBox, family, loading, error }) => {
   if (loading) return <Loading />;
   if (error) return <Error error={error}/>;
 
+  console.log(family);
+
   return (
     <FamilyElement viewBox={viewBox}/>
   );

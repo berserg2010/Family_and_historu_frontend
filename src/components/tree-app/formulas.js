@@ -23,3 +23,15 @@ export const getCenter = (container, element) => {
 		elementHeight + (containerHeight - elementHeight) / 2,
 	]
 };
+
+export const getHusbandPosition = (container, element) => {
+
+};
+
+export const getWifePosition = () => {
+
+};
+
+export const getFamilyPosition = () => {
+
+};
