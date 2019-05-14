@@ -7,7 +7,7 @@ import RenderFamily from './render-family'
 const RenderTree = ({ viewBox }) => {
 
   return (
-    //<RenderPerson id={1} viewBox={viewBox}/>
+    // <RenderPerson id={1} viewBox={viewBox}/>
     <RenderFamily id={4} viewBox={viewBox}/>
   )
 };

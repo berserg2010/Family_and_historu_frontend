@@ -1,4 +1,4 @@
-import React, { Fragment, createContext, useCallback, useState, useEffect } from 'react'
+import React, { Fragment, useCallback, useState, useEffect } from 'react'
 import { withRouter } from 'react-router-dom'
 
 import PropTypes from 'prop-types';
@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 
 import RenderTree from './render-tree';
+import { compareSize, getWidth, getHeight } from './formulas';
 
 
 const styles = (theme) => ({
@@ -23,27 +24,27 @@ const styles = (theme) => ({
 
 const Canvas = () => {
 
-  // const [width, setWidth] = useState(0);
-  // const [height, setHeight] = useState(0);
-  const [viewPort, setViewPort] = useState([0, 0, 0, 0]);
+  const [width, setWidth] = useState(0);
+  const [height, setHeight] = useState(0);
   const [viewBox, setViewBox] = useState([0, 0, 0, 0]);
+  const [sizeTree, setSizeTree] = useState({width: 0, height: 0});
 
   const getRef = useCallback((node) => {
     if (node !== null) {
-      let width = node.getBoundingClientRect().width;
-      // setWidth(width);
-      // setHeight(width * 0.75);
-      setViewPort([0, 0, width, width * 0.75]);
-      setViewBox([0, 0, width, width * 0.75]);
+      let currentWidth = node.getBoundingClientRect().width;
+
+      setWidth(currentWidth);
+      setHeight(currentWidth * 0.75);
+      setViewBox([0, 0, currentWidth, currentWidth * 0.75]);
     }
   }, []);
 
   const handleResize = (element) => () => {
-    let width = element.getBoundingClientRect().width;
-    // setWidth(width);
-    // setHeight(width * 0.75);
-    setViewPort([0, 0, width, width * 0.75]);
-    setViewBox([0, 0, width, width * 0.75])
+    let currentWidth = element.getBoundingClientRect().width;
+
+    setWidth(currentWidth);
+    setHeight(currentWidth * 0.75);
+    setViewBox([0, 0, currentWidth, currentWidth * 0.75]);
   };
 
   window.onload = handleResize(document.getElementById('tree-element'));
@@ -58,6 +59,18 @@ const Canvas = () => {
     }
   }, []);
 
+  const handleSizeTree = (tree) => {
+    setSizeTree(tree);
+
+    if (compareSize(getWidth(viewBox), sizeTree.width)) {
+      setWidth(sizeTree.width);
+    }
+
+    if (compareSize(getHeight(viewBox), sizeTree.height)) {
+      setWidth(sizeTree.height);
+    }
+  };
+
   const svgStyle = {
     border: '1px solid crimson',
   };
@@ -65,7 +78,7 @@ const Canvas = () => {
   return (
     <Fragment>
       <Typography component="h1" variant="h5">
-        Tree {viewPort.toString()} {viewBox.toString()}
+        Tree {width} {height} {viewBox.toString()}
       </Typography>
 
       {/*<div id="tree-element" ref={(node) => getRef(node)}>*/}
@@ -73,7 +86,7 @@ const Canvas = () => {
         <Paper>
           <svg
             id="tree-family"
-            width={viewPort[2]} height={viewPort[3]}
+            width={width} height={height}
             viewBox={viewBox}
             baseProfile="full"
             style={svgStyle}
@@ -84,7 +97,7 @@ const Canvas = () => {
 
             <defs></defs>
 
-            <RenderTree viewBox={viewBox}/>
+            <RenderTree viewBox={viewBox} handleSizeTree={handleSizeTree}/>
 
           </svg>
         </Paper>

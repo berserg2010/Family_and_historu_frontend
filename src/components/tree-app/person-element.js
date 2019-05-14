@@ -3,26 +3,22 @@ import { graphql } from "react-apollo";
 
 import Loading from "../../CoreApp/Loading";
 import Error from "../../CoreApp/Error";
-import { sizeRectPerson, getCenter, getWidth, getHeight } from './formulas';
+import { sizeRectPerson, paddingElement } from './formulas';
 import {
   PERSON,
 } from '../../queries'
 
 
-const TextPersonElement = ({ data, viewRect }) => {
+const TextPersonElement = ({ data, positionRect }) => {
 
   const { surname, givname } = data;
 
-  const rectWidth = getWidth(viewRect);
-  const rectHeight = getHeight(viewRect);
-
-  const positionTextX = viewRect[0] + rectWidth / 2;
-  const positionTextY = viewRect[1] + rectHeight / 2;
+  const positionTextX = positionRect.x + sizeRectPerson.width / 2;
+  const positionTextY = positionRect.y + sizeRectPerson.height / 2;
 
   return (
     <text
       x={positionTextX} y={positionTextY}
-      // fill="red"
       textAnchor="middle"
     >
       <tspan x={positionTextX} y={positionTextY - 10}>
@@ -35,7 +31,7 @@ const TextPersonElement = ({ data, viewRect }) => {
   )
 };
 
-const PersonElement = ({ viewBox, person, loading, error }) => {
+const PersonElement = ({ position, person, loading, error }) => {
 
   const [idBirth, setIdBirth] = useState(0);
 
@@ -61,19 +57,22 @@ const PersonElement = ({ viewBox, person, loading, error }) => {
 
   }
 
-  const viewRectPosition = getCenter(viewBox, sizeRectPerson);
+  const positionRect = {
+    x: position.x + paddingElement,
+    y: position.y + paddingElement,
+  };
 
   return (
-    <g>
+    <g id={`person${person.id}`}>
       <rect
         // id={id}
         style={rectStyle}
-        width={sizeRectPerson[2]} height={sizeRectPerson[3]}
+        width={sizeRectPerson.width} height={sizeRectPerson.height}
         rx={5} ry={5}
-        x={viewRectPosition[0]} y={viewRectPosition[1]}
+        x={positionRect.x} y={positionRect.y}
       />
 
-      { person && <TextPersonElement data={birthSet[idBirth]} viewRect={viewRectPosition}/> }
+      { person && <TextPersonElement data={birthSet[idBirth]} positionRect={positionRect}/> }
     </g>
   );
 };

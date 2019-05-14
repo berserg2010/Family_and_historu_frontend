@@ -2,11 +2,13 @@ import React from 'react';
 
 import PersonElement from './person-element';
 
+import { sizeRectPerson, getCenter } from "./formulas";
 
-const RenderPerson = ({ viewBox, id }) => {
+
+const RenderPerson = ({ id, viewBox }) => {
 
   return (
-    <PersonElement id={id} viewBox={viewBox}/>
+    <PersonElement id={id} position={getCenter(viewBox, sizeRectPerson)}/>
   );
 };
 

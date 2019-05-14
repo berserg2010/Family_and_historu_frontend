@@ -1,5 +1,9 @@
-export const sizeRectPerson = [0, 0, 200, 100];
-export const sizeRectFamily = [0, 0, 200, 50];
+export const paddingElement = 25;
+
+export const sizeRectPerson = { width: 200, height: 100 };
+export const sizeRectFamily = { width: 200, height: 50 };
+
+const widthHusbandAndWife = 2 * sizeRectPerson.width + 4 * paddingElement;
 
 export const getWidth = (element) => {
 	return element[2] - element[0]
@@ -10,28 +14,39 @@ export const getHeight = (element) => {
 };
 
 export const getCenter = (container, element) => {
+	return {
+		x: (getWidth(container) - element.width - 2 * paddingElement) / 2,
+		y: (getHeight(container) - element.height - 2 * paddingElement) / 2,
+	}
+};
+
+export const getPositionHusband = (container) => {
 	const containerWidth = getWidth(container);
-	const containerHeight = getHeight(container);
 
-	const elementWidth = getWidth(element);
-	const elementHeight = getHeight(element);
-
-	return [
-		(containerWidth - elementWidth) / 2,
-		(containerHeight - elementHeight) / 2,
-		elementWidth + (containerWidth - elementWidth) / 2,
-		elementHeight + (containerHeight - elementHeight) / 2,
-	]
+  return {
+  	x: (containerWidth - widthHusbandAndWife) / 2,
+	  y: paddingElement,
+  }
 };
 
-export const getHusbandPosition = (container, element) => {
+export const getPositionWife = (container) => {
+	const containerWidth = getWidth(container);
 
+	return {
+		x: (containerWidth - widthHusbandAndWife) / 2 + sizeRectPerson.width + 2 * paddingElement,
+		y: paddingElement,
+	}
 };
 
-export const getWifePosition = () => {
+export const getPositionFamily = (container) => {
+	const containerWidth = getWidth(container);
 
+	return {
+		x: (containerWidth - sizeRectFamily.width - 2 * paddingElement) / 2,
+		y: sizeRectPerson.height + 3 * paddingElement,
+	}
 };
 
-export const getFamilyPosition = () => {
-
+export const compareSize = (boxSize, treeSize) => {
+	return boxSize < treeSize;
 };

@@ -1,11 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { getCenter, sizeRectFamily } from './formulas';
+import { paddingElement, sizeRectFamily } from './formulas';
 
 
-const TextFamilyElement = () => {};
+const TextFamilyElement = ({ data, positionRect }) => {
 
-const FamilyElement = ({ viewBox }) => {
+  const datetime = data.datetime
+    ? JSON.parse(data.datetime)
+    : {};
+
+  const positionTextX = positionRect.x + sizeRectFamily.width / 2;
+  const positionTextY = positionRect.y + sizeRectFamily.height / 2;
+
+  return (
+    <text
+      x={positionTextX} y={positionTextY}
+      textAnchor="middle"
+    >
+      <tspan x={positionTextX} y={positionTextY}>
+        {datetime.day}.{datetime.month}.{datetime.year}
+      </tspan>
+    </text>
+  )
+};
+
+const FamilyElement = ({ position, marriage }) => {
+
+  const [idMarriage, setIdMarriage] = useState(0);
 
   const rectStyle = {
     fill: '#fac78c',
@@ -13,17 +34,24 @@ const FamilyElement = ({ viewBox }) => {
     stroke: '#fcae53',
   };
 
-  const viewRectPosition = getCenter(viewBox, sizeRectFamily);
+  const positionRect = {
+    x: position.x + paddingElement,
+    y: position.y + paddingElement,
+  };
 
   return (
     <g>
       <rect
-        // id={1}
         style={rectStyle}
-        width={sizeRectFamily[2]} height={sizeRectFamily[3]}
+        width={sizeRectFamily.width} height={sizeRectFamily.height}
         rx={5} ry={5}
-        x={viewRectPosition[0]} y={viewRectPosition[1]}
+        x={positionRect.x} y={positionRect.y}
       />
+
+      {
+        marriage.length &&
+        <TextFamilyElement data={marriage[idMarriage]} positionRect={positionRect}/>
+      }
     </g>
   );
 };
