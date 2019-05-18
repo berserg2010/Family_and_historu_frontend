@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { paddingElement, sizeRectFamily } from './formulas';
 
@@ -26,8 +26,6 @@ const TextFamilyElement = ({ data, positionRect }) => {
 
 const FamilyElement = ({ position, marriage }) => {
 
-  const [idMarriage, setIdMarriage] = useState(0);
-
   const rectStyle = {
     fill: '#fac78c',
     strokeWidth: 3,
@@ -49,8 +47,8 @@ const FamilyElement = ({ position, marriage }) => {
       />
 
       {
-        marriage.length &&
-        <TextFamilyElement data={marriage[idMarriage]} positionRect={positionRect}/>
+        marriage &&
+        <TextFamilyElement data={marriage} positionRect={positionRect}/>
       }
     </g>
   );

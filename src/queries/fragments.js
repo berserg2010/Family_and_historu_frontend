@@ -90,6 +90,9 @@ export const marriageFragment = {
       reltomoth,
       birth{
         id,
+        person{
+          id
+        },
         surname,
         givname,
       }

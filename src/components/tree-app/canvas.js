@@ -59,8 +59,8 @@ const Canvas = () => {
     }
   }, []);
 
-  const handleSizeTree = (tree) => {
-    setSizeTree(tree);
+  const handleSizeTree = (size) => {
+    setSizeTree(size);
 
     if (compareSize(getWidth(viewBox), sizeTree.width)) {
       setWidth(sizeTree.width);

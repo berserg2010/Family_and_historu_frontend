@@ -12,6 +12,9 @@ import {
 const TextPersonElement = ({ data, positionRect }) => {
 
   const { surname, givname } = data;
+  const datetime = data.datetime
+    ? JSON.parse(data.datetime)
+    : {};
 
   const positionTextX = positionRect.x + sizeRectPerson.width / 2;
   const positionTextY = positionRect.y + sizeRectPerson.height / 2;
@@ -26,6 +29,9 @@ const TextPersonElement = ({ data, positionRect }) => {
       </tspan>
       <tspan x={positionTextX} y={positionTextY + 10}>
         {givname}
+      </tspan>
+      <tspan x={positionTextX} y={positionTextY + 30}>
+        {datetime.day}.{datetime.month}.{datetime.year}
       </tspan>
     </text>
   )

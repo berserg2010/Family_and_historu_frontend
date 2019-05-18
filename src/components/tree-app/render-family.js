@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { graphql } from "react-apollo";
 
 import Loading from "../../CoreApp/Loading";
@@ -8,22 +8,26 @@ import {
 } from '../../queries'
 import PersonElemnt from './person-element'
 import FamilyElement from './family-element';
-import { getPositionFamily, getPositionHusband, getPositionWife } from './formulas';
+import RenderChild from './render-child';
+import { getPositionFamily, getPositionHusband, getPositionWife, getPositionChild } from './formulas';
 
 
 const RenderFamily = ({ viewBox, family, loading, error }) => {
 
+  const [idMarriage, setIdMarriage] = useState(0);
+
   if (loading) return <Loading />;
   if (error) return <Error error={error}/>;
 
-  const { marriageSet } = family;
-  const { husband, wife } = marriageSet[0];
+  const { marriageSet, childFamilySet } = family;
+  const { husband, wife } = marriageSet[idMarriage];
 
   return (
     <g>
       <PersonElemnt position={getPositionHusband(viewBox)} id={husband.id}/>
       <PersonElemnt position={getPositionWife(viewBox)} id={wife.id}/>
-      <FamilyElement position={getPositionFamily(viewBox)} marriage={marriageSet}/>
+      <FamilyElement position={getPositionFamily(viewBox)} marriage={marriageSet[idMarriage]}/>
+      <RenderChild position={getPositionChild(viewBox)} childSet={childFamilySet}/>
     </g>
   );
 };

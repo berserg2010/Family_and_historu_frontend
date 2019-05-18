@@ -47,6 +47,15 @@ export const getPositionFamily = (container) => {
 	}
 };
 
+export const getPositionChild = (container) => {
+	const containerWidth = getWidth(container);
+
+	return {
+		x: (containerWidth - sizeRectFamily.width - 2 * paddingElement) / 2,
+		y: sizeRectPerson.height + sizeRectFamily.height + 5 * paddingElement,
+	}
+};
+
 export const compareSize = (boxSize, treeSize) => {
 	return boxSize < treeSize;
 };
