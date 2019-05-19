@@ -1,23 +1,20 @@
 import React from 'react';
 
-import { paddingElement, sizeRectFamily } from './formulas';
+import { sizeRectFamily, getPositionFamilyCenter } from './formulas';
 
 
-const TextFamilyElement = ({ data, positionRect }) => {
+const TextFamilyElement = ({ data, position }) => {
 
   const datetime = data.datetime
     ? JSON.parse(data.datetime)
     : {};
 
-  const positionTextX = positionRect.x + sizeRectFamily.width / 2;
-  const positionTextY = positionRect.y + sizeRectFamily.height / 2;
-
   return (
     <text
-      x={positionTextX} y={positionTextY}
+      x={position.x} y={position.y}
       textAnchor="middle"
     >
-      <tspan x={positionTextX} y={positionTextY}>
+      <tspan x={position.x} y={position.y}>
         {datetime.day}.{datetime.month}.{datetime.year}
       </tspan>
     </text>
@@ -32,23 +29,18 @@ const FamilyElement = ({ position, marriage }) => {
     stroke: '#fcae53',
   };
 
-  const positionRect = {
-    x: position.x + paddingElement,
-    y: position.y + paddingElement,
-  };
-
   return (
     <g>
       <rect
         style={rectStyle}
         width={sizeRectFamily.width} height={sizeRectFamily.height}
         rx={5} ry={5}
-        x={positionRect.x} y={positionRect.y}
+        x={getPositionFamilyCenter(position).x} y={getPositionFamilyCenter(position).y}
       />
 
       {
         marriage &&
-        <TextFamilyElement data={marriage} positionRect={positionRect}/>
+        <TextFamilyElement data={marriage} position={position}/>
       }
     </g>
   );

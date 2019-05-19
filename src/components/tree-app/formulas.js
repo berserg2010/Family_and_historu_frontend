@@ -3,56 +3,60 @@ export const paddingElement = 25;
 export const sizeRectPerson = { width: 200, height: 100 };
 export const sizeRectFamily = { width: 200, height: 50 };
 
-const widthHusbandAndWife = 2 * sizeRectPerson.width + 4 * paddingElement;
-
-export const getWidth = (element) => {
-	return element[2] - element[0]
+export const getWidth = (container) => {
+	return container[2] - container[0]
 };
 
-export const getHeight = (element) => {
-	return element[3] - element[1]
+export const getHeight = (container) => {
+	return container[3] - container[1]
 };
 
-export const getCenter = (container, element) => {
+export const getCenter = (container) => {
 	return {
-		x: (getWidth(container) - element.width - 2 * paddingElement) / 2,
-		y: (getHeight(container) - element.height - 2 * paddingElement) / 2,
+		x: getWidth(container) / 2,
+		y: getHeight(container) / 2,
 	}
 };
 
-export const getPositionHusband = (container) => {
-	const containerWidth = getWidth(container);
+export const getPositionPersonCenter = (position) => {
+	return {
+		x: position.x - sizeRectPerson.width / 2,
+		y: position.y - sizeRectPerson.height / 2,
+	}
+};
 
+export const getPositionFamilyCenter = (position) => {
+	return {
+		x: position.x - sizeRectFamily.width / 2,
+		y: position.y - sizeRectFamily.height / 2,
+	}
+};
+
+export const getPositionHusband = (position) => {
   return {
-  	x: (containerWidth - widthHusbandAndWife) / 2,
-	  y: paddingElement,
+  	x: position.x - sizeRectPerson.width / 2 - paddingElement,
+	  y: position.y - sizeRectPerson.height / 2 - paddingElement,
   }
 };
 
-export const getPositionWife = (container) => {
-	const containerWidth = getWidth(container);
-
+export const getPositionWife = (position) => {
 	return {
-		x: (containerWidth - widthHusbandAndWife) / 2 + sizeRectPerson.width + 2 * paddingElement,
-		y: paddingElement,
+		x: position.x + sizeRectPerson.width / 2 + paddingElement,
+		y: position.y - sizeRectPerson.height / 2 - paddingElement,
 	}
 };
 
-export const getPositionFamily = (container) => {
-	const containerWidth = getWidth(container);
-
+export const getPositionFamily = (position) => {
 	return {
-		x: (containerWidth - sizeRectFamily.width - 2 * paddingElement) / 2,
-		y: sizeRectPerson.height + 3 * paddingElement,
+		x: position.x,
+		y: position.y + sizeRectFamily.height / 2 + paddingElement,
 	}
 };
 
-export const getPositionChild = (container) => {
-	const containerWidth = getWidth(container);
-
+export const getPositionChild = (position) => {
 	return {
-		x: (containerWidth - sizeRectFamily.width - 2 * paddingElement) / 2,
-		y: sizeRectPerson.height + sizeRectFamily.height + 5 * paddingElement,
+		x: position.x,
+		y: position.y + sizeRectFamily.height + 5 * paddingElement,
 	}
 };
 

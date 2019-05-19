@@ -3,34 +3,31 @@ import { graphql } from "react-apollo";
 
 import Loading from "../../CoreApp/Loading";
 import Error from "../../CoreApp/Error";
-import { sizeRectPerson, paddingElement } from './formulas';
+import { sizeRectPerson, getPositionPersonCenter } from './formulas';
 import {
   PERSON,
 } from '../../queries'
 
 
-const TextPersonElement = ({ data, positionRect }) => {
+const TextPersonElement = ({ data, position }) => {
 
   const { surname, givname } = data;
   const datetime = data.datetime
     ? JSON.parse(data.datetime)
     : {};
 
-  const positionTextX = positionRect.x + sizeRectPerson.width / 2;
-  const positionTextY = positionRect.y + sizeRectPerson.height / 2;
-
   return (
     <text
-      x={positionTextX} y={positionTextY}
+      x={position.x} y={position.y}
       textAnchor="middle"
     >
-      <tspan x={positionTextX} y={positionTextY - 10}>
+      <tspan x={position.x} y={position.y - 10}>
         {surname}
       </tspan>
-      <tspan x={positionTextX} y={positionTextY + 10}>
+      <tspan x={position.x} y={position.y + 10}>
         {givname}
       </tspan>
-      <tspan x={positionTextX} y={positionTextY + 30}>
+      <tspan x={position.x} y={position.y + 30}>
         {datetime.day}.{datetime.month}.{datetime.year}
       </tspan>
     </text>
@@ -63,11 +60,6 @@ const PersonElement = ({ position, person, loading, error }) => {
 
   }
 
-  const positionRect = {
-    x: position.x + paddingElement,
-    y: position.y + paddingElement,
-  };
-
   return (
     <g id={`person${person.id}`}>
       <rect
@@ -75,10 +67,10 @@ const PersonElement = ({ position, person, loading, error }) => {
         style={rectStyle}
         width={sizeRectPerson.width} height={sizeRectPerson.height}
         rx={5} ry={5}
-        x={positionRect.x} y={positionRect.y}
+        x={getPositionPersonCenter(position).x} y={getPositionPersonCenter(position).y}
       />
 
-      { person && <TextPersonElement data={birthSet[idBirth]} positionRect={positionRect}/> }
+      { person && <TextPersonElement data={birthSet[idBirth]} position={position}/> }
     </g>
   );
 };

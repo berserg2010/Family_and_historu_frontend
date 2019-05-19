@@ -24,17 +24,14 @@ const styles = (theme) => ({
 
 const Canvas = () => {
 
-  const [width, setWidth] = useState(0);
-  const [height, setHeight] = useState(0);
+  const [viewPort, setViewPort] = useState([0, 0, 0, 0]);
   const [viewBox, setViewBox] = useState([0, 0, 0, 0]);
-  const [sizeTree, setSizeTree] = useState({width: 0, height: 0});
 
   const getRef = useCallback((node) => {
     if (node !== null) {
       let currentWidth = node.getBoundingClientRect().width;
 
-      setWidth(currentWidth);
-      setHeight(currentWidth * 0.75);
+      setViewPort([0, 0, currentWidth, currentWidth * 0.75]);
       setViewBox([0, 0, currentWidth, currentWidth * 0.75]);
     }
   }, []);
@@ -42,8 +39,7 @@ const Canvas = () => {
   const handleResize = (element) => () => {
     let currentWidth = element.getBoundingClientRect().width;
 
-    setWidth(currentWidth);
-    setHeight(currentWidth * 0.75);
+    setViewPort([0, 0, currentWidth, currentWidth * 0.75]);
     setViewBox([0, 0, currentWidth, currentWidth * 0.75]);
   };
 
@@ -59,18 +55,6 @@ const Canvas = () => {
     }
   }, []);
 
-  const handleSizeTree = (size) => {
-    setSizeTree(size);
-
-    if (compareSize(getWidth(viewBox), sizeTree.width)) {
-      setWidth(sizeTree.width);
-    }
-
-    if (compareSize(getHeight(viewBox), sizeTree.height)) {
-      setWidth(sizeTree.height);
-    }
-  };
-
   const svgStyle = {
     border: '1px solid crimson',
   };
@@ -78,7 +62,7 @@ const Canvas = () => {
   return (
     <Fragment>
       <Typography component="h1" variant="h5">
-        Tree {width} {height} {viewBox.toString()}
+        Tree {viewPort.toString()} {viewBox.toString()}
       </Typography>
 
       {/*<div id="tree-element" ref={(node) => getRef(node)}>*/}
@@ -86,7 +70,7 @@ const Canvas = () => {
         <Paper>
           <svg
             id="tree-family"
-            width={width} height={height}
+            width={viewPort[2]} height={viewPort[3]}
             viewBox={viewBox}
             baseProfile="full"
             style={svgStyle}
@@ -97,7 +81,7 @@ const Canvas = () => {
 
             <defs></defs>
 
-            <RenderTree viewBox={viewBox} handleSizeTree={handleSizeTree}/>
+            <RenderTree viewPort={viewPort} setViewPort={setViewPort} viewBox={viewBox} id={1}/>
 
           </svg>
         </Paper>
