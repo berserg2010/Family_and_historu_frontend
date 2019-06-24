@@ -1,30 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import RenderFamily from './render-family'
 import { graphql } from "react-apollo";
 import { PERSON } from "../../queries";
 import Loading from "../../CoreApp/Loading";
 import Error from "../../CoreApp/Error";
-import { getCenter, sizeRectPerson, paddingElement } from "./formulas";
+import { getCenter } from "./formulas";
 import PersonElement from './person-element';
 
 
-const RenderTree = ({ viewPort, setViewPort, viewBox, id, person, loading, error }) => {
+const RenderTree = ({ sizeBlock, setSizeBlock, viewBox, id, person, loading, error }) => {
 
-  const [sizeElementChild, setSizeElementChild] = useState({
-    width: sizeRectPerson.width + 2 * paddingElement,
-    height: sizeRectPerson.height + 2 * paddingElement,
-  });
+  const [sizeElement, setSizeElement] = useState({ width: 0, height: 0 });
 
   const [idMarriage, setIdMarriage] = useState(0);
 
-  if (viewPort[2] < sizeElementChild.width) {
-    setViewPort([viewPort[0], viewPort[1], sizeElementChild.width, viewPort[3]])
-  }
+  useEffect(() => {
+    if (sizeBlock.width < sizeElement.width) {
+      setSizeBlock({...sizeBlock, width: sizeElement.width})
+    }
 
-  if (viewPort[3] < sizeElementChild.height) {
-    setViewPort([viewPort[0], viewPort[1], viewPort[2], sizeElementChild.height])
-  }
+    if (sizeBlock.height < sizeElement.height) {
+      setSizeBlock({...sizeBlock, height: sizeElement.height})
+    }
+  });
 
   if (loading) return <Loading />;
   if (error) return <Error error={error}/>;
@@ -33,9 +32,9 @@ const RenderTree = ({ viewPort, setViewPort, viewBox, id, person, loading, error
   const { family } = marriageHusbandSet.length && marriageHusbandSet[idMarriage];
 
   if (!family) {
-    return <PersonElement id={id} position={getCenter(viewBox)}/>
+    return <PersonElement id={id} position={getCenter(viewBox)} setSizeBlock={setSizeElement}/>
   } else {
-    return <RenderFamily id={family.id} position={getCenter(viewBox)} sizeElement={sizeElementChild} setSizeElement={setSizeElementChild}/>
+    return <RenderFamily id={family.id} position={getCenter(viewBox)} sizeBlock={sizeElement} setSizeBlock={setSizeElement}/>
   }
 };
 

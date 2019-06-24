@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { graphql } from "react-apollo";
 
 import Loading from "../../CoreApp/Loading";
 import Error from "../../CoreApp/Error";
-import { sizeRectPerson, getPositionPersonCenter } from './formulas';
 import {
   PERSON,
-} from '../../queries'
+} from '../../queries';
+
+import { sizeRectPerson, getPositionPersonCenter } from './formulas';
 
 
 const TextPersonElement = ({ data, position }) => {
@@ -34,7 +35,11 @@ const TextPersonElement = ({ data, position }) => {
   )
 };
 
-const PersonElement = ({ position, person, loading, error }) => {
+const PersonElement = ({ position, person, setSizeBlock, loading, error }) => {
+
+  useEffect(() => {
+    setSizeBlock({width: sizeRectPerson.width, height: sizeRectPerson.height})
+  });
 
   const [idBirth, setIdBirth] = useState(0);
 

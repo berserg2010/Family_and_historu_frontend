@@ -4,6 +4,7 @@ export const sizeRectPerson = { width: 200, height: 100 };
 export const sizeRectFamily = { width: 200, height: 50 };
 
 export const getWidth = (container) => {
+	console.log(container);
 	return container[2] - container[0]
 };
 
@@ -58,8 +59,4 @@ export const getPositionChild = (position) => {
 		x: position.x,
 		y: position.y + sizeRectFamily.height + 5 * paddingElement,
 	}
-};
-
-export const compareSize = (boxSize, treeSize) => {
-	return boxSize < treeSize;
 };

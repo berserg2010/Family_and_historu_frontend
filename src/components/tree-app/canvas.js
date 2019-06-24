@@ -7,7 +7,6 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 
 import RenderTree from './render-tree';
-import { compareSize, getWidth, getHeight } from './formulas';
 
 
 const styles = (theme) => ({
@@ -24,14 +23,14 @@ const styles = (theme) => ({
 
 const Canvas = () => {
 
-  const [viewPort, setViewPort] = useState([0, 0, 0, 0]);
+  const [viewPort, setViewPort] = useState({ width: 0, height: 0 });
   const [viewBox, setViewBox] = useState([0, 0, 0, 0]);
 
   const getRef = useCallback((node) => {
     if (node !== null) {
       let currentWidth = node.getBoundingClientRect().width;
 
-      setViewPort([0, 0, currentWidth, currentWidth * 0.75]);
+      setViewPort({ width: currentWidth, height: currentWidth * 0.75 });
       setViewBox([0, 0, currentWidth, currentWidth * 0.75]);
     }
   }, []);
@@ -39,7 +38,7 @@ const Canvas = () => {
   const handleResize = (element) => () => {
     let currentWidth = element.getBoundingClientRect().width;
 
-    setViewPort([0, 0, currentWidth, currentWidth * 0.75]);
+    setViewPort({ width: currentWidth, height: currentWidth * 0.75 });
     setViewBox([0, 0, currentWidth, currentWidth * 0.75]);
   };
 
@@ -62,7 +61,7 @@ const Canvas = () => {
   return (
     <Fragment>
       <Typography component="h1" variant="h5">
-        Tree {viewPort.toString()} {viewBox.toString()}
+        Tree {viewPort.width} {viewPort.height} {viewBox.toString()}
       </Typography>
 
       {/*<div id="tree-element" ref={(node) => getRef(node)}>*/}
@@ -70,7 +69,7 @@ const Canvas = () => {
         <Paper>
           <svg
             id="tree-family"
-            width={viewPort[2]} height={viewPort[3]}
+            width={viewPort.width} height={viewPort.height}
             viewBox={viewBox}
             baseProfile="full"
             style={svgStyle}
@@ -81,7 +80,7 @@ const Canvas = () => {
 
             <defs></defs>
 
-            <RenderTree viewPort={viewPort} setViewPort={setViewPort} viewBox={viewBox} id={1}/>
+            <RenderTree sizeBlock={viewPort} setSizeBlock={setViewPort} id={1} viewBox={viewBox}/>
 
           </svg>
         </Paper>
